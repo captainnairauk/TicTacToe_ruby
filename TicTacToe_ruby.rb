@@ -1,11 +1,11 @@
 board = Array.new(9,"")
 
-def display_board (array)
-    puts " #{array[0]} | #{array[1]} | #{array[2]}"
+def display_board (board)
+    puts " #{board[0]} | #{board[1]} | #{board[2]}"
     puts "---------"
-    puts " #{array[3]} | #{array[4]} | #{array[5]}"
+    puts " #{board[3]} | #{board[4]} | #{board[5]}"
     puts "---------"
-    puts " #{array[6]} | #{array[7]} | #{array[8]}"
+    puts " #{board[6]} | #{board[7]} | #{board[8]}"
 end
 
 def input_to_index(user_input)
@@ -33,7 +33,56 @@ def valid_move?(board, index)
 end
 
 display_board(board)
-valid_move?(board, index)
-position_taken?(board, index)
-input_to_index(user_input)
-move(board, index, first_player = "X")
+# valid_move?(board, index)
+# position_taken?(board, index)
+# input_to_index(user_input)
+# move(board, index, first_player = "X")
+
+def turn_count(board)
+    counter = 0
+    board.each do |spaces|
+        if spaces == "X" ||spaces =="O"
+            counter += 1
+        end
+    end
+    counter
+end
+
+def current_player(board)
+    turn_count(board) % 2 == 0 ? "X" : "O"
+end
+
+def turn (board)
+    puts "Please eneter 1-9:"
+    user_input = gets.strip 
+    index = input_to_index(user_input)
+    if valid_move?(board, index)
+        move(board, index, current_player(board))
+        turn(board)
+    end
+    display_board(board)
+end
+
+
+
+
+def play(board)
+    counter == 0
+    until counter == 9
+        turn(board)
+        counter += 1
+    end
+end
+
+def play(board)
+    until over?(board)
+        turn (board)
+    end
+    if won?(board)
+        winner(board) == "X" || winner(board) == "O"
+        puts "Congratulations #{winner(board)}!"
+    elsif draw? (board)
+        puts "Cats Game!"
+    end
+end
+
